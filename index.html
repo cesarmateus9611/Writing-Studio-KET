@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KET & PET Writing Studio Pro | Session 5 — Colegio La Felicidad</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --card: #334155;
+      --accent: #38bdf8;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --purple: #a855f7;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      line-height: 1.55;
+    }
+    .container { max-width: 1180px; margin: 0 auto; }
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, #1e293b, #090d16);
+      padding: 20px;
+      border-radius: 16px;
+      border: 2px solid #475569;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    h1 { margin: 0; color: var(--accent); font-size: 1.8rem; letter-spacing: 0.5px; }
+    .sub { color: var(--muted); font-size: 0.95rem; margin-top: 6px; }
+    .score-bar {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .badge {
+      background: #090d16;
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--accent);
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .tab-btn {
+      background: var(--panel);
+      color: var(--text);
+      border: 2px solid #475569;
+      padding: 12px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--accent);
+      color: #090d16;
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .box {
+      background: var(--panel);
+      border: 2px solid #334155;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .level-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .lvl-btn {
+      background: #090d16;
+      color: var(--muted);
+      border: 2px solid #475569;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .lvl-btn.active {
+      background: var(--purple);
+      color: white;
+      border-color: var(--purple);
+    }
+
+    /* GAME 1: WORDWALL MATCH */
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .m-card {
+      background: #090d16;
+      border: 2px solid #475569;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 10px;
+      transition: 0.15s;
+    }
+    .m-card:hover { border-color: var(--accent); }
+    .m-card.selected { border-color: var(--amber); background: rgba(245, 158, 11, 0.15); }
+    .m-card.matched { border-color: var(--green); background: rgba(34, 197, 94, 0.2); pointer-events: none; opacity: 0.75; }
+
+    /* GAME 2: EXAMINER JUDGE */
+    .sample-mail {
+      background: #090d16;
+      border-left: 5px solid var(--purple);
+      padding: 16px;
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 1.02rem;
+      margin: 12px 0;
+    }
+    .judge-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .j-btn {
+      background: var(--card);
+      color: var(--text);
+      border: 2px solid #64748b;
+      padding: 9px 15px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .j-btn:hover { border-color: var(--accent); background: #475569; }
+
+    /* GAME 3: ERROR DOCTOR */
+    .err-card {
+      background: #090d16;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .err-input {
+      width: 100%;
+      background: #1e293b;
+      color: var(--text);
+      border: 2px solid #475569;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-top: 8px;
+    }
+
+    /* GAME 4: SENTENCE TRANSFORMATIONS & CLOZE */
+    .trans-row {
+      background: #090d16;
+      border-left: 4px solid var(--amber);
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+    .inline-input {
+      background: #1e293b;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-weight: 700;
+      width: 170px;
+      font-size: 0.98rem;
+    }
+
+    /* GAME 5: LIVE WRITING STUDIO */
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 820px) { .studio-grid { grid-template-columns: 1fr; } }
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      background: #090d16;
+      color: var(--text);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    .check-item {
+      background: #090d16;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border-left: 5px solid var(--red);
+      font-size: 0.94rem;
+      transition: 0.2s;
+    }
+    .check-item.done {
+      border-left-color: var(--green);
+      color: #86efac;
+      background: rgba(34, 197, 94, 0.1);
+    }
+    .chip-Insert {
+      background: var(--card);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 5px 11px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin: 3px;
+      display: inline-block;
+    }
+    .chip-Insert:hover { background: var(--accent); color: #090d16; }
+    .counter-pill {
+      display: inline-block;
+      padding: 7px 15px;
+      border-radius: 99px;
+      font-weight: 800;
+      background: #090d16;
+      border: 2px solid var(--amber);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>✍️ KET & PET WRITING STUDIO PRO — SALA DE BILINGÜISMO</h1>
+    <div class="sub">Session 5: Short Messages, Stories, Error Clinic, Sentence Transformations & Live Drafting | Colegio La Felicidad</div>
+    <div class="score-bar">
+      <span class="badge">🎯 Match-Up: <span id="hdr-m">0</span> / 24</span>
+      <span class="badge">🕵️‍♂️ Examiner Judge: <span id="hdr-j">0</span> / 10</span>
+      <span class="badge">🩺 Error Doctor: <span id="hdr-e">0</span> / 12</span>
+      <span class="badge">🔄 Transformations: <span id="hdr-t">0</span> / 15</span>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab(1)">🎯 1. Functional Match (24)</button>
+    <button class="tab-btn" onclick="openTab(2)">🕵️‍♂️ 2. Examiner Judge (10)</button>
+    <button class="tab-btn" onclick="openTab(3)">🩺 3. Corpus Error Doctor (12)</button>
+    <button class="tab-btn" onclick="openTab(4)">🔄 4. Grammar & Cloze Lab (15)</button>
+    <button class="tab-btn" onclick="openTab(5)">📝 5. Live Writing Studio (10)</button>
+  </div>
+
+  <!-- TAB 1: FUNCTIONAL MATCH-UP (4 LEVELS = 24 PAIRS) -->
+  <div id="sec1" class="section active">
+    <div class="box">
+      <h2>🎯 Game 1: Functional Match-Up (24 Exam Functions)</h2>
+      <p>Select a level below! Tap an exam instruction on the left, then tap the matching sentence on the right.</p>
+      <div class="level-bar">
+        <button class="lvl-btn active" id="mlvl-0" onclick="loadMatchLevel(0)">Level 1: Invitations & Meetings (KET)</button>
+        <button class="lvl-btn" id="mlvl-1" onclick="loadMatchLevel(1)">Level 2: Apologies, Requests & Advice (KET/PET)</button>
+        <button class="lvl-btn" id="mlvl-2" onclick="loadMatchLevel(2)">Level 3: Story Linkers & Time Expressions (Part 7)</button>
+        <button class="lvl-btn" id="mlvl-3" onclick="loadMatchLevel(3)">Level 4: Buen Vivir & Bogotá Territory (KET/PET)</button>
+      </div>
+      <p><strong>Level Progress: <span id="m-score">0</span> / 6</strong></p>
+      <div class="match-grid">
+        <div id="left-col"></div>
+        <div id="right-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: BE THE EXAMINER (10 CANDIDATE SCRIPTS) -->
+  <div id="sec2" class="section">
+    <div class="box">
+      <h2>🕵️‍♂️ Game 2: Be the Official Cambridge Examiner! (10 Real Scripts)</h2>
+      <p>Filter by Exam Task below, read each candidate's draft, and grade it using the official Cambridge Rubric (<strong>5/5 Full Content & Good Language</strong>, <strong>3/5 Missing 1 Point or Too Short</strong>, <strong>1/5 Off-topic or Unclear</strong>).</p>
+      <div class="level-bar">
+        <button class="lvl-btn active" id="jlvl-all" onclick="filterJudge('all')">All 10 Candidates</button>
+        <button class="lvl-btn" id="jlvl-alex" onclick="filterJudge('alex')">Task A: KET Alex Swimming Pool (3)</button>
+        <button class="lvl-btn" id="jlvl-pat" onclick="filterJudge('pat')">Task B: KET Pat Shopping (3)</button>
+        <button class="lvl-btn" id="jlvl-ket7" onclick="filterJudge('ket7')">Task C: KET Part 7 Picture Story (2)</button>
+        <button class="lvl-btn" id="jlvl-pet" onclick="filterJudge('pet')">Task D: PET Emails (Charlie & Eva) (2)</button>
+      </div>
+      <div id="judge-container"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: CAMBRIDGE CORPUS ERROR DOCTOR (12 CHALLENGES) -->
+  <div id="sec3" class="section">
+    <div class="box">
+      <h2>🩺 Game 3: Cambridge Learner Corpus Error Doctor (12 Sentences)</h2>
+      <p>These 12 sentences come from real KET Objective & PET Plus candidate scripts. Each sentence has <strong>grammar, spelling, or preposition mistakes</strong>. Type the corrected sentence or click "Check / Show Answer"!</p>
+      <div id="error-container"></div>
+    </div>
+  </div>
+
+  <!-- TAB 4: SENTENCE TRANSFORMATIONS & OPEN CLOZE (15 ITEMS) -->
+  <div id="sec4" class="section">
+    <div class="box">
+      <h2>🔄 Game 4: PET Writing Part 1 Transformations & KET Part 5 Email Cloze (15 Items)</h2>
+      <p>Complete the second sentence so that it means the same as the first, using <strong>no more than 3 words</strong> (PET Writing Part 1 & KET Open Cloze).</p>
+      <div id="trans-container"></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: LIVE WRITING STUDIO (10 MISSIONS) -->
+  <div id="sec5" class="section">
+    <div class="box">
+      <h2>📝 Game 5: Live Writing Simulator & Automatic Drafting Checklist (10 Missions)</h2>
+      <div style="margin-bottom:12px;">
+        <strong>Choose Your Official Exam Mission (10 Tasks Available): </strong><br>
+        <select id="mission-select" onchange="loadMission()" style="width:100%; margin-top:6px; background:#090d16; color:#38bdf8; padding:10px; border-radius:8px; border:2px solid #38bdf8; font-weight:bold; font-size:0.98rem;">
+          <optgroup label="A2 KEY (KET) — Part 6 Short Messages (25-35+ words)">
+            <option value="ket_toni">Mission 1 (KET Part 6): Email to Toni — Swimming on Saturday (Sample Paper)</option>
+            <option value="ket_alex">Mission 2 (KET Part 6): Postcard to Alex — Local Swimming Pool (Objective WF3)</option>
+            <option value="ket_jan">Mission 3 (KET Part 6): Email to Jan — Meeting at the Cinema (Objective WF5)</option>
+            <option value="ket_sonia">Mission 4 (KET Part 6): Note to Sonia — School Newspaper on Families (Objective Test 3)</option>
+          </optgroup>
+          <optgroup label="A2 KEY (KET) — Part 7 Three-Picture Stories (35+ words)">
+            <option value="ket_fridge">Mission 5 (KET Part 7): 3-Picture Story — Empty Fridge & Local Bakery (Sample Paper)</option>
+            <option value="ket_wetland">Mission 6 (KET Part 7): 3-Picture Story — Humedal La Conejera Clean-Up & Picnic (Buen Vivir)</option>
+          </optgroup>
+          <optgroup label="B1 PRELIMINARY (PET) — Emails & Notes (35-45 or 80-100 words)">
+            <option value="pet_charlie">Mission 7 (PET Short Email): Reply to Charlie — Refusing Clubbing Invitation (PET Plus Test 1)</option>
+            <option value="pet_eva">Mission 8 (PET Short Note): Note to Eva — Returning Borrowed Rucksack (PET Plus Test 2)</option>
+            <option value="pet_sandy">Mission 9 (PET Part 1 Email): Reply to Sandy — Rock Concert & Mountains (100 words)</option>
+            <option value="pet_saskia">Mission 10 (PET Buen Vivir Note): Sunday Lunch & Sumapaz / Market Plan with Saskia</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div id="mission-prompt" class="sample-mail" style="border-left-color:var(--accent); font-family:inherit;"></div>
+
+      <div style="margin:10px 0;">
+        <strong>Quick Connectors & Functional Phrases (Click to insert):</strong><br>
+        <span class="chip-Insert" onclick="insertWord('Hi ')">Hi ...,</span>
+        <span class="chip-Insert" onclick="insertWord('Thanks for your email! ')">Thanks for your email!</span>
+        <span class="chip-Insert" onclick="insertWord('Would you like to ')">Would you like to...</span>
+        <span class="chip-Insert" onclick="insertWord('How about meeting at ')">How about meeting at...</span>
+        <span class="chip-Insert" onclick="insertWord('I\'m really sorry, but I can\'t because ')">I'm sorry, but I can't because...</span>
+        <span class="chip-Insert" onclick="insertWord('First, ')">First,</span>
+        <span class="chip-Insert" onclick="insertWord('Then, ')">Then,</span>
+        <span class="chip-Insert" onclick="insertWord('After that, ')">After that,</span>
+        <span class="chip-Insert" onclick="insertWord('Finally, ')">Finally,</span>
+        <span class="chip-Insert" onclick="insertWord('However, ')">However,</span>
+        <span class="chip-Insert" onclick="insertWord('Best wishes,\n')">Best wishes,</span>
+      </div>
+
+      <div class="studio-grid">
+        <div>
+          <textarea id="student-text" oninput="evaluateDraft()" placeholder="Start typing your email, note, or story here..."></textarea>
+          <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span id="word-counter" class="counter-pill">Words: 0</span>
+            <div>
+              <button class="j-btn" onclick="clearDraft()">🗑️ Clear</button>
+              <button class="j-btn" onclick="showModelAnswer()">💡 Show Model Answer</button>
+            </div>
+          </div>
+          <div id="model-box" class="sample-mail" style="display:none; margin-top:12px; border-left-color:var(--green);"></div>
+        </div>
+
+        <div>
+          <h3 style="margin-top:0;">✅ Live Drafting Checklist</h3>
+          <div id="chk1" class="check-item">1. Greeting or Story Opening Included</div>
+          <div id="chk2" class="check-item">2. Bullet 1 / Picture 1 Covered</div>
+          <div id="chk3" class="check-item">3. Bullet 2 / Picture 2 Covered</div>
+          <div id="chk4" class="check-item">4. Bullet 3 / Picture 3 Covered</div>
+          <div id="chk5" class="check-item">5. Connectors Used (because, but, so, then, however...)</div>
+          <div id="chk6" class="check-item">6. Target Word Count Reached!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openTab(n) {
+    document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i + 1 === n));
+    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i + 1 === n));
+  }
+
+  /* =========================================================
+     GAME 1: 4 LEVELS x 6 PAIRS = 24 FUNCTIONAL MATCH ITEMS
+     ========================================================= */
+  const matchLevels = [
+    [
+      { id: 1, func: "1. Invite a friend to go swimming on Saturday", phr: "Would you like to go swimming with me this Saturday?" },
+      { id: 2, func: "2. Suggest a place and time to meet", phr: "How about meeting outside the library at 3:00 p.m.?" },
+      { id: 3, func: "3. Explain how you will travel there", phr: "We can travel there by bike along the ciclorruta." },
+      { id: 4, func: "4. Say which film you want to see at the cinema", phr: "I really want to watch the new science-fiction movie." },
+      { id: 5, func: "5. Explain why your friend will enjoy the film", phr: "You'll love it because your favourite actor is in it!" },
+      { id: 6, func: "6. Tell a friend what you want to buy in town", phr: "I'd like to buy a new pair of trainers and a jacket." }
+    ],
+    [
+      { id: 7, func: "1. Apologise for missing a meeting yesterday", phr: "I'm really sorry I couldn't meet you at the café yesterday." },
+      { id: 8, func: "2. Thank a friend and refuse an invitation politely", phr: "Thanks for inviting me, but I'm afraid I can't come." },
+      { id: 9, func: "3. Remind a friend they borrowed your rucksack", phr: "Do you remember that you borrowed my bag two weeks ago?" },
+      { id: 10, func: "4. Ask a friend to return something soon", phr: "Could you please give it back to me before Friday?" },
+      { id: 11, func: "5. Advise a friend on the best time to visit a pool", phr: "You should swim in the morning because it's quieter." },
+      { id: 12, func: "6. Thank a friend for a birthday present", phr: "Thank you so much for the cool T-shirt you sent me!" }
+    ],
+    [
+      { id: 13, func: "1. Set the scene at the start of a story", phr: "Yesterday morning, Daniel woke up early and felt hungry." },
+      { id: 14, func: "2. Introduce a sudden problem or contrast", phr: "However, when he opened the fridge, it was completely empty!" },
+      { id: 15, func: "3. Show the next action in a sequence", phr: "After that, he got dressed and walked down the street." },
+      { id: 16, func: "4. Describe an interrupted past action", phr: "While he was walking to the bakery, he saw his best friend." },
+      { id: 17, func: "5. Express the purpose of going somewhere", phr: "He went into the neighborhood café in order to buy breakfast." },
+      { id: 18, func: "6. Bring the story to a happy ending", phr: "Finally, he had hot coffee and toast and felt much better." }
+    ],
+    [
+      { id: 19, func: "1. Suggest visiting a local wetland in Bogotá", phr: "Why don't we go birdwatching at Córdoba Wetland on Sunday?" },
+      { id: 20, func: "2. Refuse mountain climbing with a health reason", phr: "I'd prefer not to go climbing because my knee hurts." },
+      { id: 21, func: "3. Recommend buying food at a local peasant market", phr: "Let's buy fresh fruit at the local plaza de mercado." },
+      { id: 22, func: "4. Describe a public sports centre in your neighborhood", phr: "The pool at CEFE Fontibón is large, clean, and has warm water." },
+      { id: 23, func: "5. Invite a friend to a public rock festival", phr: "Would you like to go to Rock al Parque with me this weekend?" },
+      { id: 24, func: "6. Ask a visitor a question about the weather", phr: "By the way, should I bring a warm jacket for the cold nights?" }
+    ]
+  ];
+
+  let curMatchLevel = 0;
+  let selLeft = null;
+  let totalMatches = 0;
+  let levelMatches = [0, 0, 0, 0];
+
+  function loadMatchLevel(lvl) {
+    curMatchLevel = lvl;
+    selLeft = null;
+    document.querySelectorAll("#sec1 .lvl-btn").forEach((b, i) => b.classList.toggle("active", i === lvl));
+    document.getElementById("m-score").innerText = levelMatches[lvl];
+
+    const lCol = document.getElementById("left-col");
+    const rCol = document.getElementById("right-col");
+    lCol.innerHTML = "";
+    rCol.innerHTML = "";
+
+    const pairs = matchLevels[lvl];
+    pairs.forEach(p => {
+      const d = document.createElement("div");
+      d.className = "m-card";
+      d.innerText = p.func;
+      d.onclick = () => {
+        document.querySelectorAll("#left-col .m-card").forEach(c => c.classList.remove("selected"));
+        d.classList.add("selected");
+        selLeft = { el: d, id: p.id };
+      };
+      lCol.appendChild(d);
+    });
+
+    [...pairs].sort(() => Math.random() - 0.5).forEach(p => {
+      const d = document.createElement("div");
+      d.className = "m-card";
+      d.innerText = p.phr;
+      d.onclick = () => {
+        if (!selLeft) return;
+        if (selLeft.id === p.id) {
+          d.classList.add("matched");
+          selLeft.el.classList.add("matched");
+          selLeft.el.classList.remove("selected");
+          selLeft = null;
+          levelMatches[lvl]++;
+          totalMatches++;
+          document.getElementById("m-score").innerText = levelMatches[lvl];
+          document.getElementById("hdr-m").innerText = totalMatches;
+        } else {
+          d.style.borderColor = "#ef4444";
+          setTimeout(() => d.style.borderColor = "#475569", 500);
+        }
+      };
+      rCol.appendChild(d);
+    });
+  }
+
+  /* =========================================================
+     GAME 2: 10 EXAMINER JUDGE CANDIDATE SCRIPTS
+     ========================================================= */
+  const candidates = [
+    {
+      cat: "alex",
+      task: "KET Part 6 (Alex's Pool): 1) What pool is like, 2) How to get there from centre, 3) Best time to go (25-35 words).",
+      name: "Candidate 1: Grazia (KET Objective WF3)",
+      text: "Hi Alex,\nThere is a swimming pool near the motorway. Why not go at lunchtime or on Saturday? See you.\nGrazia (21 words)",
+      rightScore: "3/5",
+      exp: "Grazia only wrote 21 words (under 25) and omitted how to get there from the centre and what the pool is like."
+    },
+    {
+      cat: "alex",
+      task: "KET Part 6 (Alex's Pool): 1) What pool is like, 2) How to get there from centre, 3) Best time to go (25-35 words).",
+      name: "Candidate 2: Juan (KET Objective WF3)",
+      text: "Dear Alex,\nIt'll be nice to see you next month! The best pool is ten minutes by bus from the centre (bus 34). The water's really warm! Swim in the morning, because it gets busy later.\nLove, Juan (38 words)",
+      rightScore: "5/5",
+      exp: "Spot on! Juan answered all 3 questions clearly, used 'because', signed off, and wrote 38 words."
+    },
+    {
+      cat: "alex",
+      task: "KET Part 6 (Alex's Pool): 1) What pool is like, 2) How to get there from centre, 3) Best time to go (25-35 words).",
+      name: "Candidate 3: Pietro",
+      text: "Hello Alex,\nI like swimming very much. Swimming is my favourite sport and I bought new blue shorts yesterday at the market.\nBye, Pietro (24 words)",
+      rightScore: "1/5",
+      exp: "Pietro wrote about swimming, but didn't answer ANY of Alex's three questions!"
+    },
+    {
+      cat: "pat",
+      task: "KET Part 6 (Shopping with Pat — WF5): 1) When you are free, 2) Where to meet, 3) What you want to buy (25-35 words).",
+      name: "Candidate 4: Claudia (KET Objective WF5)",
+      text: "Dear Pat,\nI think it is a great idea to go shopping together. We could meet at the bus stop at 12 o'clock in the morning. I'd like to buy some pens.\nSee you soon, Claudia (36 words)",
+      rightScore: "5/5",
+      exp: "Claudia included all 3 points clearly (12 o'clock, bus stop, buy some pens) with accurate grammar!"
+    },
+    {
+      cat: "pat",
+      task: "KET Part 6 (Shopping with Pat — WF5): 1) When you are free, 2) Where to meet, 3) What you want to buy (25-35 words).",
+      name: "Candidate 5: Anya (KET Objective WF5)",
+      text: "Dear Pat: I will go for two hours. I will meet with John and I will want to buy a red bicycle.\nYour friend (24 words)",
+      rightScore: "1/5",
+      exp: "Only 1 point is clear (buy a bicycle). 'For two hours' doesn't say when she is free, and 'meet with John' isn't a place!"
+    },
+    {
+      cat: "pat",
+      task: "KET Part 6 (Shopping with Pat — WF5): 1) When you are free, 2) Where to meet, 3) What you want to buy (25-35 words).",
+      name: "Candidate 6: Lukas",
+      text: "Hi Pat,\nI'm free on Saturday afternoon at 2 p.m. Let's meet outside the shopping centre in Fontibón.\nSee you, Lukas (21 words)",
+      rightScore: "3/5",
+      exp: "Good English, but Lukas forgot Bullet 3 (what he wants to buy) and wrote fewer than 25 words."
+    },
+    {
+      cat: "ket7",
+      task: "KET Part 7 (3 Pictures): 1) Man wakes up in bed, 2) Opens empty fridge, 3) Eats coffee & toast at a café (35+ words).",
+      name: "Candidate 7: Valentina",
+      text: "Yesterday morning, Tom woke up at 7 a.m. and felt very hungry. First, he went to the kitchen and opened the fridge, but there wasn't any food inside. Finally, he got dressed and had hot coffee and toast at a local café. (42 words)",
+      rightScore: "5/5",
+      exp: "Excellent! Connects all 3 pictures in the Past Simple using 'First', 'but', and 'Finally' in 42 words."
+    },
+    {
+      cat: "ket7",
+      task: "KET Part 7 (3 Pictures): 1) Man wakes up in bed, 2) Opens empty fridge, 3) Eats coffee & toast at a café (35+ words).",
+      name: "Candidate 8: Kevin",
+      text: "The man is in the bed. Then he is in the kitchen looking the fridge. He is hungry. (18 words)",
+      rightScore: "3/5",
+      exp: "Way too short (18 words instead of 35+) and completely misses Picture 3 (going to the café for breakfast)."
+    },
+    {
+      cat: "pet",
+      task: "PET Part 2 (Email to Charlie — PET Plus p. 29): 1) Thank Charlie for clubbing invite, 2) Say you can't go + reason, 3) Suggest another time (35-45 words).",
+      name: "Candidate 9: Ivana (PET Plus p. 29)",
+      text: "Dear Charlie,\nThank you for inviting me to go clubbing with you next Saturday. I'm sorry, but I can't go because I'm going to Edinburgh for the weekend with my cousins. I'd like to see you next week. Are you free on Monday evening?\nIvana (45 words)",
+      rightScore: "5/5",
+      exp: "Full marks (5/5)! Ivana thanked Charlie, explained why she can't go, and suggested Monday evening."
+    },
+    {
+      cat: "pet",
+      task: "PET Part 2 (Note to Eva — PET Plus p. 73): 1) Remind Eva she has your rucksack, 2) Ask her to return it, 3) Explain why you need it (35-45 words).",
+      name: "Candidate 10: Estelle (PET Plus p. 73)",
+      text: "Hi Eva,\nDo you remember that you lent me a rucksack two weeks ago? If you don't need it yourself, can I borrow it again next weekend, please? I need it because I'm going camping with some friends.\nThanks, Estelle (40 words)",
+      rightScore: "1/5",
+      exp: "Careful! Estelle misunderstood the prompt: she wrote 'you lent me' instead of reminding Eva that EVA borrowed HER rucksack!"
+    }
+  ];
+
+  let judgedDone = {};
+
+  function initJudge() {
+    const div = document.getElementById("judge-container");
+    div.innerHTML = "";
+    candidates.forEach((c, i) => {
+      div.innerHTML += `
+        <div class="judge-card" data-cat="${c.cat}" style="margin-bottom:18px; border-bottom:1px solid #334155; padding-bottom:14px;">
+          <div style="color:var(--accent); font-size:0.88rem; font-weight:700;">📋 ${c.task}</div>
+          <strong style="font-size:1.05rem;">${c.name}</strong>
+          <div class="sample-mail">${c.text.replace(/\n/g, "<br>")}</div>
+          <div class="judge-btns">
+            <button class="j-btn" onclick="grade(${i}, '5/5')">🏆 5/5 (Full Content & Length)</button>
+            <button class="j-btn" onclick="grade(${i}, '3/5')">⚠️ 3/5 (Missing Point / Too Short)</button>
+            <button class="j-btn" onclick="grade(${i}, '1/5')">❌ 1/5 (Off-topic / Wrong Task)</button>
+          </div>
+          <div id="j-fb-${i}" style="margin-top:8px; font-weight:bold;"></div>
+        </div>
+      `;
+    });
+  }
+
+  function filterJudge(cat) {
+    document.querySelectorAll("#sec2 .lvl-btn").forEach(b => b.classList.remove("active"));
+    document.getElementById("jlvl-" + cat).classList.add("active");
+    document.querySelectorAll(".judge-card").forEach(card => {
+      card.style.display = (cat === "all" || card.dataset.cat === cat) ? "block" : "none";
+    });
+  }
+
+  function grade(idx, chosen) {
+    const c = candidates[idx];
+    const fb = document.getElementById(`j-fb-${idx}`);
+    if (chosen === c.rightScore) {
+      fb.style.color = "#4ade80";
+      fb.innerHTML = `✅ Correct Examiner Verdict (${c.rightScore}): ${c.exp}`;
+      if (!judgedDone[idx]) {
+        judgedDone[idx] = true;
+        document.getElementById("hdr-j").innerText = Object.keys(judgedDone).length;
+      }
+    } else {
+      fb.style.color = "#f87171";
+      fb.innerHTML = `❌ Try again! Think about the 3 content points and word count.`;
+    }
+  }
+
+  /* =========================================================
+     GAME 3: 12 CAMBRIDGE LEARNER CORPUS ERROR DOCTOR ITEMS
+     ========================================================= */
+  const corpusErrors = [
+    {
+      bad: "1. Thank you for asking me coming with you to the city centre on Tuesday.",
+      hint: "Preposition 'for asking me' + infinitive (to + verb) — PET Plus p. 29",
+      good: "Thank you for asking me to come with you to the city centre on Tuesday."
+    },
+    {
+      bad: "2. I sorry, but I can't come because I go to the dentist this afternoon.",
+      hint: "Missing verb 'am' + Present Continuous for personal plan ('I am going') — PET Plus p. 29",
+      good: "I'm sorry, but I can't come because I'm going to the dentist this afternoon."
+    },
+    {
+      bad: "3. What about we meet on another time?",
+      hint: "Use 'What about meeting another time?' (no 'on') — PET Plus p. 29",
+      good: "What about meeting another time?"
+    },
+    {
+      bad: "4. Last Saturday I went to Aqua Park with my freind Peter. It was a beatiful day.",
+      hint: "Fix the 2 spelling mistakes: 'freind' and 'beatiful' — KET Objective p. 39",
+      good: "Last Saturday I went to Aqua Park with my friend Peter. It was a beautiful day."
+    },
+    {
+      bad: "5. The park was very intresting and their were many things we could do.",
+      hint: "Fix spelling of 'intresting' and homophone 'their' -> 'there' — KET Objective p. 39",
+      good: "The park was very interesting and there were many things we could do."
+    },
+    {
+      bad: "6. You can call me at my cell phone: 22 59 67 81.",
+      hint: "Preposition error: we say 'ON my cell phone / mobile' — KET Objective p. 113",
+      good: "You can call me on my cell phone: 22 59 67 81."
+    },
+    {
+      bad: "7. The hotel is at the centre of the town.",
+      hint: "Preposition error: we say 'IN the centre of the town' — KET Objective p. 113",
+      good: "The hotel is in the centre of the town."
+    },
+    {
+      bad: "8. Would you like coming to Ireland with me in next month?",
+      hint: "After 'Would you like' use 'to come', and remove 'in' before 'next month' — PET Plus p. 73",
+      good: "Would you like to come to Ireland with me next month?"
+    },
+    {
+      bad: "9. We can use my brothers' tent because he needn't it.",
+      hint: "Singular 'brother's tent' + negative 'he doesn't need it' — PET Plus p. 73",
+      good: "We can use my brother's tent because he doesn't need it."
+    },
+    {
+      bad: "10. Yesterday we went to the zoo and yesterday we went to the museum.",
+      hint: "Avoid repeating words with 'and' (KET Objective p. 30)",
+      good: "Yesterday we went to the zoo and the museum."
+    },
+    {
+      bad: "11. It was not enough hot to go swimming in the river.",
+      hint: "Word order with 'enough': adjective + enough ('hot enough') — KET Objective p. 79",
+      good: "It was not hot enough to go swimming in the river."
+    },
+    {
+      bad: "12. I'd like seeing you next weekend at the park.",
+      hint: "Use 'I'd like TO SEE' (infinitive with to) — KET Objective p. 96",
+      good: "I'd like to see you next weekend at the park."
+    }
+  ];
+
+  let errDone = {};
+
+  function initErrorDoctor() {
+    const div = document.getElementById("error-container");
+    div.innerHTML = "";
+    corpusErrors.forEach((e, i) => {
+      div.innerHTML += `
+        <div class="err-card">
+          <div style="color:#f87171; font-weight:700;">❌ Candidate Error: ${e.bad}</div>
+          <div style="color:var(--muted); font-size:0.86rem; margin-top:3px;">💡 Hint: ${e.hint}</div>
+          <input type="text" id="err-in-${i}" class="err-input" placeholder="Type the corrected sentence here...">
+          <div style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="j-btn" onclick="checkError(${i})">✔️ Check My Correction</button>
+            <button class="j-btn" onclick="revealError(${i})">👀 Show Official Correction</button>
+          </div>
+          <div id="err-fb-${i}" style="margin-top:8px; font-weight:700;"></div>
+        </div>
+      `;
+    });
+  }
+
+  function norm(s) {
+    return s.toLowerCase().replace(/[^a-z0-9\s]/g, "").replace(/\s+/g, " ").trim();
+  }
+
+  function checkError(i) {
+    const val = document.getElementById(`err-in-${i}`).value;
+    const fb = document.getElementById(`err-fb-${i}`);
+    if (norm(val) === norm(corpusErrors[i].good)) {
+      fb.style.color = "#4ade80";
+      fb.innerHTML = `✅ Perfect Correction! "${corpusErrors[i].good}"`;
+      if (!errDone[i]) {
+        errDone[i] = true;
+        document.getElementById("hdr-e").innerText = Object.keys(errDone).length;
+      }
+    } else {
+      fb.style.color = "#fbbf24";
+      fb.innerHTML = `⚠️ Almost! Compare carefully with: "${corpusErrors[i].good}"`;
+    }
+  }
+
+  function revealError(i) {
+    document.getElementById(`err-in-${i}`).value = corpusErrors[i].good;
+    checkError(i);
+  }
+
+  /* =========================================================
+     GAME 4: 15 SENTENCE TRANSFORMATIONS & EMAIL CLOZE ITEMS
+     ========================================================= */
+  const transItems = [
+    {
+      orig: "1. My friend's room isn't as big as my room. (PET Writing Part 1)",
+      before: "My room is ",
+      after: " my friend's room.",
+      ans: ["bigger than", "larger than"]
+    },
+    {
+      orig: "2. It isn't necessary to pay if you are a student. (PET Writing Part 1)",
+      before: "You ",
+      after: " pay if you are a student.",
+      ans: ["needn't", "don't have to", "do not have to", "don't need to"]
+    },
+    {
+      orig: "3. I haven't stayed in this guesthouse before. (PET Writing Part 1)",
+      before: "This is the first time I ",
+      after: " in this guesthouse.",
+      ans: ["have stayed", "'ve stayed"]
+    },
+    {
+      orig: "4. The cinema opened two years ago. (PET Writing Part 1)",
+      before: "The cinema ",
+      after: " open for two years.",
+      ans: ["has been", "'s been"]
+    },
+    {
+      orig: "5. My boyfriend advised me to book tickets in advance. (PET Writing Part 1)",
+      before: "My boyfriend said I ",
+      after: " book tickets in advance.",
+      ans: ["should", "ought to"]
+    },
+    {
+      orig: "6. 'Why don't we go to the rock concert?' said Sandy. (PET Writing Part 1)",
+      before: "Sandy suggested ",
+      after: " to the rock concert.",
+      ans: ["going", "we go", "that we go"]
+    },
+    {
+      orig: "7. It's too cold to sit outside in the park today. (PET Writing Part 1)",
+      before: "It isn't ",
+      after: " to sit outside in the park today.",
+      ans: ["warm enough", "hot enough"]
+    },
+    {
+      orig: "8. There are twelve screens in the new cinema. (PET Writing Part 1)",
+      before: "The new cinema ",
+      after: " twelve screens.",
+      ans: ["has", "has got"]
+    },
+    {
+      orig: "9. You won't get a ticket unless you book early. (PET Writing Part 1)",
+      before: "You won't get a ticket ",
+      after: " you book early.",
+      ans: ["if you don't", "unless"]
+    },
+    {
+      orig: "10. I prefer cycling along the ciclorruta to taking the bus. (PET Writing Part 1)",
+      before: "I like cycling along the ciclorruta ",
+      after: " taking the bus.",
+      ans: ["more than", "better than"]
+    },
+    {
+      orig: "11. KET Part 5 Email Cloze: Yesterday morning, we went to ___ lovely beach.",
+      before: "Yesterday morning, we went to ",
+      after: " lovely beach.",
+      ans: ["a", "this"]
+    },
+    {
+      orig: "12. KET Part 5 Email Cloze: We went to a party ___ the evening.",
+      before: "We went to a party ",
+      after: " the evening.",
+      ans: ["in", "during"]
+    },
+    {
+      orig: "13. KET Part 5 Email Cloze: Tomorrow, we want to ___ on a boat trip.",
+      before: "Tomorrow, we want to ",
+      after: " on a boat trip.",
+      ans: ["go"]
+    },
+    {
+      orig: "14. KET Part 5 Email Cloze: I'll show you my photos ___ I get back.",
+      before: "I'll show you my photos ",
+      after: " I get back.",
+      ans: ["when", "after"]
+    },
+    {
+      orig: "15. KET Part 5 Email Cloze: There was a sale in one shop and I got two pairs of jeans ___ the price of one!",
+      before: "I got two pairs of jeans ",
+      after: " the price of one!",
+      ans: ["for"]
+    }
+  ];
+
+  let transDone = {};
+
+  function initTrans() {
+    const div = document.getElementById("trans-container");
+    div.innerHTML = "";
+    transItems.forEach((t, i) => {
+      div.innerHTML += `
+        <div class="trans-row">
+          <div style="font-weight:700; color:var(--muted); margin-bottom:6px;">${t.orig}</div>
+          <div>
+            ${t.before}
+            <input type="text" id="tr-in-${i}" class="inline-input" placeholder="1-3 words">
+            ${t.after}
+            <button class="j-btn" style="padding:5px 12px; margin-left:8px;" onclick="checkTrans(${i})">Check</button>
+          </div>
+          <div id="tr-fb-${i}" style="margin-top:6px; font-weight:700; font-size:0.9rem;"></div>
+        </div>
+      `;
+    });
+  }
+
+  function checkTrans(i) {
+    const val = document.getElementById(`tr-in-${i}`).value.trim().toLowerCase();
+    const fb = document.getElementById(`tr-fb-${i}`);
+    if (transItems[i].ans.includes(val)) {
+      fb.style.color = "#4ade80";
+      fb.innerHTML = `✅ Correct! (${transItems[i].ans[0]})`;
+      if (!transDone[i]) {
+        transDone[i] = true;
+        document.getElementById("hdr-t").innerText = Object.keys(transDone).length;
+      }
+    } else {
+      fb.style.color = "#f87171";
+      fb.innerHTML = `❌ Expected: "${transItems[i].ans.join(' / ')}"`;
+    }
+  }
+
+  /* =========================================================
+     GAME 5: 10 LIVE WRITING STUDIO MISSIONS
+     ========================================================= */
+  const missions = {
+    ket_toni: {
+      prompt: "<strong>Mission 1 — KET Part 6 (Question 31, Official Sample Paper):</strong> You want to go swimming on Saturday with your English friend, <strong>Toni</strong>. Write an email to Toni (25+ words):<br>• <strong>Bullet 1:</strong> ask Toni to go swimming with you on Saturday<br>• <strong>Bullet 2:</strong> say where you want to go swimming (e.g., CEFE Fontibón / Compensar / local pool)<br>• <strong>Bullet 3:</strong> say how you will travel there (e.g., by bike / by bus).",
+      minWords: 25,
+      k1: ["hi", "dear", "hello"],
+      k2: ["swim", "swimming", "saturday", "would you like", "want to"],
+      k3: ["pool", "cefe", "centre", "center", "club", "park", "fontibon", "compensar"],
+      k4: ["bike", "bicycle", "bus", "car", "walk", "ciclorruta", "train", "sitp"],
+      model: "Hi Toni,\nWould you like to go swimming with me this Saturday morning? Let's go to the new public pool at CEFE Fontibón because the water is warm. We can travel there by bike along the ciclorruta!\nSee you,\nMateo (40 words)"
+    },
+    ket_alex: {
+      prompt: "<strong>Mission 2 — KET Part 6 (Postcard to Alex, KET Objective WF3 p. 69):</strong> Your friend <strong>Alex</strong> is visiting your town next month and asks:<br>• <strong>Bullet 1:</strong> What's the swimming pool like?<br>• <strong>Bullet 2:</strong> How do I get there from the town centre?<br>• <strong>Bullet 3:</strong> When's the best time to go?<br>Write 25–35 words.",
+      minWords: 25,
+      k1: ["hi", "dear", "hello"],
+      k2: ["big", "warm", "clean", "modern", "water", "metres", "slides", "lovely", "nice"],
+      k3: ["bus", "walk", "bike", "cycle", "taxi", "minutes", "centre", "center"],
+      k4: ["morning", "afternoon", "evening", "saturday", "early", "lunchtime", "time"],
+      model: "Dear Alex,\nOur local pool is really big and the water is warm! You can take bus 34 from the town centre and get there in ten minutes. The best time to swim is in the morning because it's quiet.\nLove,\nSofia (42 words)"
+    },
+    ket_jan: {
+      prompt: "<strong>Mission 3 — KET Part 6 (Email to Jan, KET Objective WF5 p. 117):</strong> You are going to meet your friend <strong>Jan</strong> at the cinema tomorrow. Write an email to Jan (25–35 words):<br>• <strong>Bullet 1:</strong> say when you will meet at the cinema<br>• <strong>Bullet 2:</strong> say which film you want to see<br>• <strong>Bullet 3:</strong> explain why Jan would enjoy this film.",
+      minWords: 25,
+      k1: ["hi", "dear", "hello"],
+      k2: ["meet", "p.m.", "o'clock", "tomorrow", "evening", "afternoon", "6", "7", "8"],
+      k3: ["see", "watch", "film", "movie", "adventure", "comedy", "action"],
+      k4: ["because", "love", "enjoy", "funny", "exciting", "actor", "music"],
+      model: "Hi Jan,\nLet's meet outside the cinema at 6:30 p.m. tomorrow. I'd love to see the new Colombian adventure film. You'll really enjoy it because the story is exciting and the music is great!\nBest wishes,\nLucas (37 words)"
+    },
+    ket_sonia: {
+      prompt: "<strong>Mission 4 — KET Part 6 (Note to Sonia, KET Objective Test 3 p. 70):</strong> Sonia is writing an article for the school newspaper on families. Write a note to Sonia (25–35 words) answering:<br>• <strong>Bullet 1:</strong> How many brothers and sisters do you have?<br>• <strong>Bullet 2:</strong> Are you the youngest, oldest, middle, or an only child?<br>• <strong>Bullet 3:</strong> What do you most enjoy doing together as a family?",
+      minWords: 25,
+      k1: ["hi", "dear", "hello"],
+      k2: ["brother", "sister", "only child", "two", "one", "three", "have"],
+      k3: ["youngest", "oldest", "middle", "only"],
+      k4: ["enjoy", "like", "love", "together", "cooking", "park", "lunch", "football", "walking"],
+      model: "Hi Sonia,\nI have one older brother and one younger sister, so I am the middle child in my family. At weekends, we really enjoy cooking lunch together and riding our bikes in the park.\nBest,\nValeria (37 words)"
+    },
+    ket_fridge: {
+      prompt: "<strong>Mission 5 — KET Part 7 (Question 32 — 3 Pictures, Sample Paper):</strong> Look at the 3 pictures:<br>• <strong>Picture 1:</strong> A young man wakes up in bed in the morning stretching.<br>• <strong>Picture 2:</strong> He goes to the kitchen and opens the fridge, but it is almost empty.<br>• <strong>Picture 3:</strong> He gets dressed and enjoys hot coffee and toast at a local neighborhood café/bakery.<br>Write the story in the Past Simple (35+ words).",
+      minWords: 35,
+      k1: ["yesterday", "morning", "one day", "last", "woke", "got up"],
+      k2: ["bed", "woke", "hungry", "tired", "morning", "stretched"],
+      k3: ["fridge", "kitchen", "empty", "nothing", "food", "opened", "looked"],
+      k4: ["cafe", "café", "bakery", "coffee", "breakfast", "bread", "toast", "ate", "restaurant"],
+      model: "Yesterday morning, Daniel woke up at 8 o'clock and felt very hungry. First, he walked into the kitchen and opened the fridge, but there wasn't any food inside! Finally, he got dressed and went to a local bakery in his neighborhood to have hot coffee and toast. (47 words)"
+    },
+    ket_wetland: {
+      prompt: "<strong>Mission 6 — KET Part 7 (3-Picture Buen Vivir Story — Wetland Clean-Up):</strong> Write a story in the Past Simple (35+ words) about these 3 pictures:<br>• <strong>Picture 1:</strong> On Saturday morning, a group of students arrived at Humedal La Conejera and saw plastic bottles near the path.<br>• <strong>Picture 2:</strong> They worked together putting the rubbish into recycling bags and planting native trees.<br>• <strong>Picture 3:</strong> Afterwards, they sat on the grass, shared fruit, and watched native birds.",
+      minWords: 35,
+      k1: ["saturday", "last", "morning", "one day", "arrived", "went"],
+      k2: ["wetland", "park", "plastic", "bottles", "rubbish", "dirty", "saw"],
+      k3: ["cleaned", "bags", "picked", "planted", "trees", "helped", "worked"],
+      k4: ["birds", "fruit", "picnic", "happy", "shared", "watched", "relaxed"],
+      model: "Last Saturday morning, Sofia and her classmates went to the local wetland and saw plastic bottles near the water. First, they worked together to pick up the rubbish and planted native trees. Finally, they shared fresh fruit on the grass and watched the beautiful birds. (45 words)"
+    },
+    pet_charlie: {
+      prompt: "<strong>Mission 7 — PET Short Email (Reply to Charlie, PET Plus p. 29):</strong> Your friend Charlie invited you to go clubbing next Saturday, but you can't go. Write an email (35–45 words):<br>• <strong>Bullet 1:</strong> thank him for inviting you<br>• <strong>Bullet 2:</strong> tell him you can't go and explain why<br>• <strong>Bullet 3:</strong> suggest meeting another time.",
+      minWords: 35,
+      k1: ["hi", "dear", "hello"],
+      k2: ["thank", "thanks", "inviting", "asking"],
+      k3: ["sorry", "can't", "cannot", "afraid", "because", "family", "exam", "visit", "busy"],
+      k4: ["meet", "free", "how about", "what about", "sunday", "monday", "next week", "instead"],
+      model: "Hi Charlie,\nThanks a lot for inviting me to go clubbing with you next Saturday. I'm really sorry, but I can't come because it's my grandmother's birthday dinner. How about meeting for coffee on Sunday afternoon instead?\nBest wishes,\nSebastián (40 words)"
+    },
+    pet_eva: {
+      prompt: "<strong>Mission 8 — PET Short Note (Note to Eva, PET Plus p. 73):</strong> Your friend Eva borrowed your rucksack two weeks ago and hasn't returned it. Write a note to Eva (35–45 words):<br>• <strong>Bullet 1:</strong> remind her that she has your rucksack<br>• <strong>Bullet 2:</strong> ask her to return it<br>• <strong>Bullet 3:</strong> explain why you need it (e.g., a hike in the páramo).",
+      minWords: 35,
+      k1: ["hi", "dear", "hello"],
+      k2: ["remember", "borrowed", "rucksack", "bag", "two weeks"],
+      k3: ["return", "give", "bring", "back", "could you", "can you", "please"],
+      k4: ["need", "because", "camping", "hiking", "trip", "mountains", "weekend"],
+      model: "Hi Eva,\nDo you remember that you borrowed my rucksack two weeks ago? Could you please bring it back to school tomorrow? I really need it before Saturday because I'm going hiking in the mountains with my family.\nThanks,\nAndrés (40 words)"
+    },
+    pet_sandy: {
+      prompt: "<strong>Mission 9 — PET Writing Part 1 (Email to Sandy, ~100 words):</strong> Reply to Sandy's email including all 4 notes:<br>• <strong>Note 1 (Me too!):</strong> Say you are also excited to visit.<br>• <strong>Note 2 (Say which I prefer):</strong> Choose between going to the local rock concert or relaxing at home on the first evening.<br>• <strong>Note 3 (No, because...):</strong> Refuse going climbing in the mountains and give a reason (and suggest a Buen Vivir alternative!).<br>• <strong>Note 4 (Ask Sandy...):</strong> Ask a question about what to bring or the weather.",
+      minWords: 80,
+      k1: ["hi", "dear", "hello"],
+      k2: ["excited", "happy", "can't wait", "great", "visit", "see you"],
+      k3: ["prefer", "concert", "rock", "music", "relax", "home"],
+      k4: ["climbing", "mountains", "because", "sorry", "afraid", "hurt", "instead", "?"],
+      model: "Hi Sandy,\nThanks for your email! I'm really excited about coming to stay with you for a week too.\nOn my first evening, I'd definitely prefer to go to the rock concert because I love live music and we can relax later!\nAbout going climbing in the mountains, I'm afraid I can't do that because I hurt my knee playing football last week. How about going for a bike ride around the local market instead?\nBy the way, what's the weather like there? Should I bring a warm jacket?\nSee you soon,\nCamila (92 words)"
+    },
+    pet_saskia: {
+      prompt: "<strong>Mission 10 — PET Buen Vivir Note (Saskia's Sunday Visit, PET Plus p. 74):</strong> Your English friend Saskia is spending Sunday at your home in Bogotá. Write a note to Saskia (35–45 words):<br>• <strong>Bullet 1:</strong> tell her who she will meet at your home<br>• <strong>Bullet 2:</strong> say what traditional meal she will have<br>• <strong>Bullet 3:</strong> ask how she would like to spend the afternoon.",
+      minWords: 35,
+      k1: ["hi", "dear", "hello"],
+      k2: ["meet", "parents", "mum", "mother", "brother", "sister", "family"],
+      k3: ["meal", "lunch", "ajiaco", "food", "soup", "cook", "eat", "traditional"],
+      k4: ["afternoon", "would you like", "how about", "park", "museum", "ciclovia", "?"],
+      model: "Hi Saskia,\nI'm so glad you're coming to my house this Sunday! You'll meet my parents and my older brother. My mum is going to cook a traditional ajiaco for lunch. What would you like to do in the afternoon? Would you like to walk around Simón Bolívar Park?\nLove,\nPaula (50 words)"
+    }
+  };
+
+  function loadMission() {
+    const key = document.getElementById("mission-select").value;
+    const m = missions[key];
+    document.getElementById("mission-prompt").innerHTML = m.prompt;
+    document.getElementById("student-text").value = "";
+    document.getElementById("model-box").style.display = "none";
+    evaluateDraft();
+  }
+
+  function clearDraft() {
+    document.getElementById("student-text").value = "";
+    evaluateDraft();
+  }
+
+  function insertWord(w) {
+    const ta = document.getElementById("student-text");
+    ta.value += w;
+    ta.focus();
+    evaluateDraft();
+  }
+
+  function evaluateDraft() {
+    const key = document.getElementById("mission-select").value;
+    const m = missions[key];
+    const raw = document.getElementById("student-text").value.trim();
+    const low = raw.toLowerCase();
+    const words = raw ? raw.split(/\s+/).length : 0;
+
+    document.getElementById("word-counter").innerText = `Words: ${words} / Target: ${m.minWords}+`;
+
+    const hasAny = (arr) => arr.some(w => low.includes(w));
+    const connectors = ["and", "but", "because", "so", "then", "first", "finally", "however", "when", "after", "instead"];
+
+    document.getElementById("chk1").classList.toggle("done", hasAny(m.k1));
+    document.getElementById("chk2").classList.toggle("done", hasAny(m.k2));
+    document.getElementById("chk3").classList.toggle("done", hasAny(m.k3));
+    document.getElementById("chk4").classList.toggle("done", hasAny(m.k4));
+    document.getElementById("chk5").classList.toggle("done", hasAny(connectors));
+    document.getElementById("chk6").classList.toggle("done", words >= m.minWords);
+  }
+
+  function showModelAnswer() {
+    const key = document.getElementById("mission-select").value;
+    const box = document.getElementById("model-box");
+    box.style.display = "block";
+    box.innerHTML = `<strong>🌟 Official Model Answer:</strong><br>${missions[key].model.replace(/\n/g, "<br>")}`;
+  }
+
+  // Initialize all 5 modules
+  loadMatchLevel(0);
+  initJudge();
+  initErrorDoctor();
+  initTrans();
+  loadMission();
+</script>
+</body>
+</html>
